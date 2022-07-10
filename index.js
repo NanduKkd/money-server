@@ -2,8 +2,7 @@ const express = require('express')
 const app = express()
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
-const transCon = require('./controllers/transactions')
-const typesCon = require('./controllers/types')
+const routes = require('./routes')
 
 
 mongoose.connect('mongodb://127.0.0.1:27017')
@@ -23,11 +22,7 @@ app.get('/', (req, res) => {
 	res.send("Hello there")
 })
 
-app.get('/api/transactions/data', transCon.getData)
-app.get('/api/transactions/stat', transCon.getStat)
-app.post('/api/transactions', transCon.addTransaction)
-app.patch('/api/transactions/:id', transCon.editTransaction)
-app.delete('/api/transactions/:id', transCon.deleteTransaction)
+app.use(routes)
 
 app.listen(3001, () => {
 	console.log('Listening on port 3001')
